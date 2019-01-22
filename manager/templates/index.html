@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>caviar - self-sovereign identity platform on Ontology</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.6/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1009907_iw0m8f5588o.css">
+
+    {{ JSGlue.include() }}
+    <!-- import favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
+    <style>
+        .el-select .el-input {
+            width: 240px;
+        }
+
+        .input-with-select .el-input-group__prepend {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="vue-app" style="width:1400px; margin:auto;">
+    <el-tabs type="border-card" stretch>
+        <el-tab-pane label="Authentication">
+            <el-form label-position="right" label-width="150px">
+                <el-row :gutter="20" style="margin-bottom: 20px;">
+
+                    <el-col :span="8">
+                        <el-card shadow="hover">
+                            <div slot="header" class="clearfix">
+                                <span>Trust Anchor</span>
+                            </div>
+                            <div align=center>
+                                <img src="static/assets/chesicc.png" height="90px" @click="chesiccTableVisible=true">
+                            </div>
+                            <el-dialog title="Claim details" :visible.sync="chesiccTableVisible" width="55%"
+                                       :close-on-click-modal=false :close-on-press-escape=true>
+                                <el-form label-position="right" :model="chesiccClaim">
+
+                                    <el-row :gutter="10" style="margin-bottom: 20px;">
+                                        <el-col :span="5">
+                                            <el-form-item label="姓名" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.name"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="3">
+                                            <el-form-item label="性别" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.gender"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="6">
+                                            <el-form-item label="学号" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.stuId"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="10">
+                                            <el-form-item label="出生日期" label-width="80px">
+                                                <el-input
+                                                        v-model="chesiccClaim.birthData"
+                                                        suffix-icon="iconfont el-icon-third-calendarx"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+
+                                    </el-row>
+
+                                    <el-row :gutter="10" style="margin-bottom: 20px;">
+                                        <el-col :span="5">
+                                            <el-form-item label="形式" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.stuFrom"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="3">
+                                            <el-form-item label="层次" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.level"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="6">
+                                            <el-form-item label="院系" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.department"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="10">
+                                            <el-form-item label="证件号码" label-width="80px">
+                                                <el-input
+                                                        v-model="chesiccClaim.nationalID"
+                                                        suffix-icon="iconfont el-icon-third-IDcard"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                    </el-row>
+
+                                    <el-row :gutter="10" style="margin-bottom: 20px;">
+                                        <el-col :span="5">
+                                            <el-form-item label="院校" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.school"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="3">
+                                            <el-form-item label="民族" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.nation"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+
+                                        <el-col :span="6">
+                                            <el-form-item label="专业" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.major"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="10">
+                                            <el-form-item label="入学时间" label-width="80px">
+                                                <el-input
+                                                        v-model="chesiccClaim.entryTime"
+                                                        suffix-icon="iconfont el-icon-third-entryTime"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+
+                                    <el-row :gutter="10" style="margin-bottom: 20px;">
+                                        <el-col :span="5">
+                                            <el-form-item label="类型" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.stuType"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="3">
+                                            <el-form-item label="学制" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.schDuration"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="6">
+                                            <el-form-item label="班级" label-width="40px">
+                                                <el-input
+                                                        v-model="chesiccClaim.schClass"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="10">
+                                            <el-form-item label="学籍状态" label-width="80px">
+                                                <el-input
+                                                        v-model="chesiccClaim.rollState"
+                                                        suffix-icon="iconfont el-icon-third-rollState"
+                                                        :readonly="true">
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+
+                                </el-form>
+                            </el-dialog>
+
+                        </el-card>
+                    </el-col>
+
+                    <el-col :span="8">
+                        <el-card shadow="hover">
+                            <div slot="header" class="clearfix">
+                                <span>Trust Anchor</span>
+                            </div>
+                            <div align=center>
+                                <img src="static/assets/sensetime.png" height="90px" @click="chesiccTableVisible=true">
+                            </div>
+                        </el-card>
+                    </el-col>
+
+                    <el-col :span="8">
+                        <el-card shadow="hover">
+                            <div slot="header" class="clearfix">
+                                <span>Trust Anchor</span>
+                            </div>
+                            <div align=center>
+                                <img src="static/assets/cfca.jpg" height="90px" @click="chesiccTableVisible=true">
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-form>
+        </el-tab-pane>
+    </el-tabs>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui@2.4.6/lib/index.js"></script>
+<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ontology-dapi@0.4.6/lib/browser.min.js"></script>
+<script src="{{ url_for('static', filename='js/authentication.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</html>

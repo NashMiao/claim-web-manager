@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>caviar - self-sovereign identity platform on Ontology</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.6/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1009907_vdbqtnjfl6r.css">
+    {{ JSGlue.include() }}
+    <!-- import favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        .el-select .el-input {
+            width: 240px;
+        }
+
+        .input-with-select .el-input-group__prepend {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="vue-app" style="width:2000px; margin:auto" align=center>
+    <el-dialog
+            title="Welcome Back!"
+            :visible.sync="loginDialogVisible"
+            width="40%"
+            :close-on-click-modal="false"
+            :before-close="handleLoginDialogClose">
+        <el-row :gutter="25">
+            <el-col :span="8">
+                <img src="static/login1.png" height="200px" alt="">
+            </el-col>
+            <el-col :span="8">
+                <img src="static/login2.png" height="200px" alt="">
+            </el-col>
+            <el-col :span="8">
+                <img src="static/login3.png" height="200px" alt="">
+            </el-col>
+        </el-row>
+        <el-form :model="loginForm" status-icon ref="loginForm" label-width="120px"
+                 class="demo-ruleForm">
+            <el-row :gutter="25">
+                <el-col :span="10">
+                    <el-form-item label="Network">
+                        <el-cascader
+                                expand-trigger="hover"
+                                filterable
+                                :options="settingForm.networkOptions"
+                                v-model="settingForm.networkSelected"
+                                @change="networkChange">
+                        </el-cascader>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="14">
+                    <el-input
+                            v-model="settingForm.networkSelected[0]"
+                            :readonly="true">
+                    </el-input>
+                </el-col>
+            </el-row>
+            <el-row :gutter="25">
+                <el-col :span="10">
+                    <el-form-item label="Identity">
+                        <el-cascader
+                                expand-trigger="hover"
+                                filterable
+                                :options="settingForm.identityOptions"
+                                v-model="settingForm.identitySelected"
+                                @change="loginIdentityChange">
+                        </el-cascader>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="14">
+                    <el-input
+                            v-model="settingForm.ontIdSelected"
+                            :readonly="true">
+                    </el-input>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-form-item label="Password" prop="pass">
+                    <div class="block" style="margin-bottom: 15px;">
+                        <el-input suffix-icon="el-icon-edit-outline" type="password"
+                                  v-model="loginForm.identityPass" @keyup.enter.native="login">
+                        </el-input>
+                    </div>
+                </el-form-item>
+            </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+                        <el-button type="primary" @click="reloadLoginPage">Reload</el-button>
+            <el-button type="primary" @click="createIdentity">Create</el-button>
+            <el-button type="primary" @click="login">Login</el-button>
+        </span>
+    </el-dialog>
+    <el-dialog
+            title="Create successful"
+            width="35%"
+            :visible.sync="settingForm.newIdentityPrivateKeyDialogVisible"
+            :close-on-click-modal="false"
+            :before-close="clearNewIdentityHexPrivateKey"
+            :show-close="false"
+            :close-on-press-escape="false">
+        <div class="block" style="margin-bottom: 15px;">
+            <el-form ref="settingForm" :model="settingForm" label-width="100px">
+                <el-form-item label="ONTID">
+                    <el-input v-model="settingForm.newOntId"
+                              suffix-icon="iconfont el-icon-third-ontid" :readonly="true"></el-input>
+                </el-form-item>
+                <el-form-item label="Private Key">
+                    <el-input v-model="settingForm.newIdentityHexPrivateKey"
+                              suffix-icon="iconfont el-icon-third-key" :readonly="true"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary"
+                       @click="settingForm.newIdentityPrivateKeyDialogVisible = false">Confirm
+            </el-button>
+        </span>
+    </el-dialog>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui@2.4.6/lib/index.js"></script>
+<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/dapp-setting.js') }}"></script>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</html>
